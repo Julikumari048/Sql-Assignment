@@ -1,0 +1,84 @@
+mysql> use cwassignments;
+Database changed
+mysql>  create table Employeedetails(empid int,fullname varchar(20),managerid int,dateofjoining date,city varchar(10));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc Employeedetails;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| empid         | int         | YES  |     | NULL    |       |
+| fullname      | varchar(20) | YES  |     | NULL    |       |
+| managerid     | int         | YES  |     | NULL    |       |
+| dateofjoining | date        | YES  |     | NULL    |       |
+| city          | varchar(10) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Employeedetails values(121,'john snow',321,'2014-01-31','toronto'),(321,'walter white',986,'2015-01-30','california'),(421,'kuldeep rana',876,'2016-11-27','new delhi');
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employeedetails;
++-------+--------------+-----------+---------------+------------+
+| empid | fullname     | managerid | dateofjoining | city       |
++-------+--------------+-----------+---------------+------------+
+|   121 | john snow    |       321 | 2014-01-31    | toronto    |
+|   321 | walter white |       986 | 2015-01-30    | california |
+|   421 | kuldeep rana |       876 | 2016-11-27    | new delhi  |
++-------+--------------+-----------+---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create table Employeesalary(empid int,project varchar(3),salary int ,variable int);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>  insert into Employeesalary values(121,'p1',8000,500),(321,'p2',10000,1000),(421,'p1',12000,0);
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employeesalary;
++-------+---------+--------+----------+
+| empid | project | salary | variable |
++-------+---------+--------+----------+
+|   121 | p1      |   8000 |      500 |
+|   321 | p2      |  10000 |     1000 |
+|   421 | p1      |  12000 |        0 |
++-------+---------+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select fullname from Employeedetails WHERE fullname like 'hn%';
+Empty set (0.00 sec)
+
+mysql> select fullname from Employeedetails WHERE fullname like '__hn%';
++-----------+
+| fullname  |
++-----------+
+| john snow |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from Employeesalary e1 INNER JOIN Employeedetails e2 on e1.empid=e2.empid;
++-------+---------+--------+----------+-------+--------------+-----------+---------------+------------+
+| empid | project | salary | variable | empid | fullname     | managerid | dateofjoining | city       |
++-------+---------+--------+----------+-------+--------------+-----------+---------------+------------+
+|   121 | p1      |   8000 |      500 |   121 | john snow    |       321 | 2014-01-31    | toronto    |
+|   321 | p2      |  10000 |     1000 |   321 | walter white |       986 | 2015-01-30    | california |
+|   421 | p1      |  12000 |        0 |   421 | kuldeep rana |       876 | 2016-11-27    | new delhi  |
++-------+---------+--------+----------+-------+--------------+-----------+---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employeedetails where empid not in (select empid from Employeesalary);
+Empty set (0.00 sec)
+
+mysql> select AVG(salary),MAX(salary) as maxsalary, MIN(salary) as minsalary from Employeesalary ;
++-------------+-----------+-----------+
+| AVG(salary) | maxsalary | minsalary |
++-------------+-----------+-----------+
+|  10000.0000 |     12000 |      8000 |
++-------------+-----------+-----------+
+1 row in set (0.05 sec)
+
+mysql> select empid from Employeesalary where project is NULL;
+Empty set (0.00 sec)
+
+mysql>
