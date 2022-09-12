@@ -1,0 +1,146 @@
+mysql> create table STUDENT(name varchar(20), rollno int, branch varchar(20), city varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into STUDENT values('vijaya', 150, 'cse', 'chennai'),('sita', 202, 'etc', 'kolkata'),('ravi', 300, 'eee', 'delhi'),('basu', 165, 'etc', 'chennai'),('rasmi', 107, 'etc', 'rkl'),('karan', 111, 'cse', 'ctc'),('rekha', 117, 'bme', 'bbsr');
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++--------+--------+--------+---------+
+| name   | rollno | branch | city    |
++--------+--------+--------+---------+
+| vijaya |    150 | cse    | chennai |
+| sita   |    202 | etc    | kolkata |
+| ravi   |    300 | eee    | delhi   |
+| basu   |    165 | etc    | chennai |
+| rasmi  |    107 | etc    | rkl     |
+| karan  |    111 | cse    | ctc     |
+| rekha  |    117 | bme    | bbsr    |
++--------+--------+--------+---------+
+7 rows in set (0.00 sec)
+
+1) Count the number of students of each department:-
+
+mysql> select branch, COUNT(*) from student GROUP BY branch;
++--------+----------+
+| branch | COUNT(*) |
++--------+----------+
+| cse    |        2 |
+| etc    |        3 |
+| eee    |        1 |
+| bme    |        1 |
++--------+----------+
+4 rows in set (0.00 sec)
+
+
+2) Count the number of students of each department where the department name starts with ‘E’:-
+
+mysql> select name,branch,COUNT(branch) from student where branch LIKE 'e%' GROUP BY name, branch;
++-------+--------+---------------+
+| name  | branch | COUNT(branch) |
++-------+--------+---------------+
+| sita  | etc    |             1 |
+| ravi  | eee    |             1 |
+| basu  | etc    |             1 |
+| rasmi | etc    |             1 |
++-------+--------+---------------+
+4 rows in set (0.01 sec)
+
+3) Add a field called MARKS to the table STUDENT which can hold a number upto 8 digit length:-
+
+mysql> alter table student add(marks varchar(8));
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(20) | YES  |     | NULL    |       |
+| rollno | int         | YES  |     | NULL    |       |
+| branch | varchar(20) | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
+| marks  | varchar(8)  | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+4) Modify the field :”NAME” of the table STUDENT to hold a maximum of 25 character:-
+
+mysql> ALTER table student MODIFY name varchar(25);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| name   | varchar(25) | YES  |     | NULL    |       |
+| rollno | int         | YES  |     | NULL    |       |
+| branch | varchar(20) | YES  |     | NULL    |       |
+| city   | varchar(20) | YES  |     | NULL    |       |
+| marks  | varchar(8)  | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+
+5) Delete all rows from the table STUDENT where branch is ETC:-
+
+mysql> delete from student where branch='etc';
+Query OK, 3 rows affected (0.00 sec)
+
+mysql>  select * from STUDENT;
++--------+--------+--------+---------+-------+
+| name   | rollno | branch | city    | marks |
++--------+--------+--------+---------+-------+
+| vijaya |    150 | cse    | chennai | NULL  |
+| ravi   |    300 | eee    | delhi   | NULL  |
+| karan  |    111 | cse    | ctc     | NULL  |
+| rekha  |    117 | bme    | bbsr    | NULL  |
++--------+--------+--------+---------+-------+
+4 rows in set (0.00 sec)
+
+6) Rename the table STUDENT to STUDINFORMATION:-
+
+mysql> rename table STUDENT TO STUDINFORMATION;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from STUDINFORMATION;
++--------+--------+--------+---------+-------+
+| name   | rollno | branch | city    | marks |
++--------+--------+--------+---------+-------+
+| vijaya |    150 | cse    | chennai | NULL  |
+| ravi   |    300 | eee    | delhi   | NULL  |
+| karan  |    111 | cse    | ctc     | NULL  |
+| rekha  |    117 | bme    | bbsr    | NULL  |
++--------+--------+--------+---------+-------+
+4 rows in set (0.00 sec)
+
+7) Delete all the data part from the table STUDENT:-
+
+mysql> delete from STUDINFORMATION;
+Query OK, 4 rows affected (0.00 sec)
+
+8) Destroy the table STUDENT:-
+
+mysql> drop tables STUDINFORMATION;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc STUDINFORMATION;
+ERROR 1146 (42S02): Table 'cwassignments.studinformation' doesn't exist
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
