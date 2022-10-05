@@ -1,0 +1,114 @@
+mysql> create database assignment1;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> use assignment1;
+Database changed
+mysql> create table city(id int,name varchar(17),countrycode varchar(3),district varchar(20),popilation int);
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> select * from city;
+Empty set (0.06 sec)
+
+mysql> desc city;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| id          | int         | YES  |     | NULL    |       |
+| name        | varchar(17) | YES  |     | NULL    |       |
+| countrycode | varchar(3)  | YES  |     | NULL    |       |
+| district    | varchar(20) | YES  |     | NULL    |       |
+| popilation  | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+
+mysql> insert into city(id,name,countrycode,district,populationvalues(3878,"scottsdale","USA","arizona",202705);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(3878,"scottsdale","USA","arizona",202705)' at line 1
+mysql> insert into city(id,name,countrycode,district,population) values(3878,"scottsdale","usa","california",202705);
+ERROR 1054 (42S22): Unknown column 'population' in 'field list'
+mysql> insert into city(id,name,countrycode,district,popilation) values(3878,"scottsdale","usa","california",202705);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from city;
++------+------------+-------------+------------+------------+
+| id   | name       | countrycode | district   | popilation |
++------+------------+-------------+------------+------------+
+| 3878 | scottsdale | usa         | california |     202705 |
++------+------------+-------------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> update city set district = Arizona where district = california;
+ERROR 1054 (42S22): Unknown column 'california' in 'where clause'
+mysql> update city set district = Arizona where id = 3878;
+ERROR 1insert into city(id,name,countrycode,district,popilation) values(3878,"scottsdale","usa","california",9^Z      na" where id=3878;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from city;
++------+------------+-------------+----------+------------+
+| id   | name       | countrycode | district | popilation |
++------+------------+-------------+----------+------------+
+| 3878 | scottsdale | usa         | Arizona  |     202705 |
++------+------------+-------------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into city(id,name,countrycode,distric,popilation) values(3965,"Corona","usa","California",90000);
+ERROR 1054 (42S22): Unknown column 'distric' in 'field list'
+mysql> insert into city(id,name,countrycode,district,popilation) values(3965,"Corona","usa","California",90000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into city(id,name,countrycode,district,popilation) values(3973,"concord","usa","california",121780);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into city(id,name,countrycode,district,popilation) values(3977,"cedar rapids","usa","lowa",120758);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into city(id,name,countrycode,district,popilation) values(3982,"coral springs","usa","florida",87456);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from city;
++------+---------------+-------------+------------+------------+
+| id   | name          | countrycode | district   | popilation |
++------+---------------+-------------+------------+------------+
+| 3878 | scottsdale    | usa         | Arizona    |     202705 |
+| 3965 | Corona        | usa         | California |      90000 |
+| 3973 | concord       | usa         | california |     121780 |
+| 3977 | cedar rapids  | usa         | lowa       |     120758 |
+| 3982 | coral springs | usa         | florida    |      87456 |
++------+---------------+-------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from city where popilation > 100000;
++------+--------------+-------------+------------+------------+
+| id   | name         | countrycode | district   | popilation |
++------+--------------+-------------+------------+------------+
+| 3878 | scottsdale   | usa         | Arizona    |     202705 |
+| 3973 | concord      | usa         | california |     121780 |
+| 3977 | cedar rapids | usa         | lowa       |     120758 |
++------+--------------+-------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(popilation)from city where district="california";
++-----------------+
+| sum(popilation) |
++-----------------+
+|          211780 |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> select avg(popilation)from city;
++-----------------+
+| avg(popilation) |
++-----------------+
+|     124539.8000 |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> select celling(avg(popilation))from city;
+ERROR 1305 (42000): FUNCTION assignment1.celling does not exist
+mysql> select ceiling (avg(popilation))from city;
++---------------------------+
+| ceiling (avg(popilation)) |
++---------------------------+
+|                    124540 |
++---------------------------+
+1 row in set (0.00 sec)

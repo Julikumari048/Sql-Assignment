@@ -1,0 +1,256 @@
+mysql> create table employee(empid int not null,primary key(empid),empfname varchar(20),emplname varchar(20),department varchar(10),project varchar(5), address varchar(25),dob varchar(10),gender varchar(1),salary int);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empid      | int         | NO   | PRI | NULL    |       |
+| empfname   | varchar(20) | YES  |     | NULL    |       |
+| emplname   | varchar(20) | YES  |     | NULL    |       |
+| department | varchar(10) | YES  |     | NULL    |       |
+| project    | varchar(5)  | YES  |     | NULL    |       |
+| address    | varchar(25) | YES  |     | NULL    |       |
+| dob        | varchar(10) | YES  |     | NULL    |       |
+| gender     | varchar(1)  | YES  |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+9 rows in set (0.04 sec)
+
+mysql> insert into employee values(1,"Sanjay","Mehra","HR","p1","Hyderabad(HYD)","20/04/1999","M",50000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee values(1,"Sanjay","Mehra","HR","p1","Hyderabad(HYD)","20/0402/05/19/1998","F",75000);
+ERROR 1406 (22001): Data too long for column 'dob' at row 1
+mysql> insert into employee values(1,"Ananya","Mehra","Admin","p2","Delhi(DEL)","21/02/1998","F",75000);
+ERROR 1062 (23000): Duplicate entry '1' for key 'employee.PRIMARY'
+mysql> insert into employee values(2,"Ananya","Mehra","Admin","p2","Delhi(DEL)","21/02/1998","F",75000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(3,"Rohan","Diwan","Account","p3","Mumbai(BOM)","01/01/2011","M",90000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into employee values(4,"Sonia","Kulkarni","HR","p4","Hyderabad(HYD)","15/08/1995","M",45000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee values(5,"Priya","Thakur","Development","p2","Bangalore","23/02/1992","F",100000);
+ERROR 1406 (22001): Data too long for column 'department' at row 1
+mysql> insert into employee values(5,"Priya","Thakur","Developer","p2","Bangalore","23/02/1992","F",100000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     1 | Sanjay   | Mehra    | HR         | p1      | Hyderabad(HYD) | 20/04/1999 | M      |  50000 |
+|     2 | Ananya   | Mehra    | Admin      | p2      | Delhi(DEL)     | 21/02/1998 | F      |  75000 |
+|     3 | Rohan    | Diwan    | Account    | p3      | Mumbai(BOM)    | 01/01/2011 | M      |  90000 |
+|     4 | Sonia    | Kulkarni | HR         | p4      | Hyderabad(HYD) | 15/08/1995 | M      |  45000 |
+|     5 | Priya    | Thakur   | Developer  | p2      | Bangalore      | 23/02/1992 | F      | 100000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set dob ="01/12/1976" where empid=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set dob ="02/05/1968" where empid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set project=p1 where empid=3;
+ERROR 1054 (42S22): Unknown column 'p1' in 'field list'
+mysql> update employee set project="p1" where empid=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set dob="01/01/1980" where empid=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set project="p3" where empid=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set dob="02/05/1992" where empid=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     1 | Sanjay   | Mehra    | HR         | p1      | Hyderabad(HYD) | 01/12/1976 | M      |  50000 |
+|     2 | Ananya   | Mehra   se | Admin      | p2      | Delhi(DEL)     | 02/05/1968 | F      |  75000 |
+|     3 | Rohan    | Diwan    | Account    | p1      | Mumbai(BOM)    | 01/01/1980 | M      |  90000 |
+|     4 | Sonia    | Kulkarni | HR         | p3      | Hyderabad(HYD) | 02/05/1992 | M      |  45000 |
+|     5 | Priya    | Thakur   | Developer  | p2      | Bangalore      | 23/02/1992 | F      | 100000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where department = "HR";
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     1 | Sanjay   | Mehra    | HR         | p1      | Hyderabad(HYD) | 01/12/1976 | M      |  50000 |
+|     4 | Sonia    | Kulkarni | HR         | p3      | Hyderabad(HYD) | 02/05/1992 | M      |  45000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where gender="F";
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address    | dob        | gender | salary |
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+|     2 | Ananya   | Mehra    | Admin      | p2      | Delhi(DEL) | 02/05/1968 | F      |  75000 |
+|     5 | Priya    | Thakur   | Developer  | p2      | Bangalore  | 23/02/1992 | F      | 100000 |
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where gender = "F";
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address    | dob        | gender | salary |
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+|     2 | Ananya   | Mehra    | Admin      | p2      | Delhi(DEL) | 02/05/1968 | F      |  75000 |
+|     5 | Priya    | Thakur   | Developer  | p2      | Bangalore  | 23/02/1992 | F      | 100000 |
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where gender = "F" and department="HR";
+Empty set (0.00 sec)
+
+mysql> update employee set gender="F" where empid=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee where gender = "F" and department="HR";
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     4 | Sonia    | Kulkarni | HR         | p3      | Hyderabad(HYD) | 02/05/1992 | F      |  45000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where gender="F";
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     2 | Ananya   | Mehra    | Admin      | p2      | Delhi(DEL)     | 02/05/1968 | F      |  75000 |
+|     4 | Sonia    | Kulkarni | HR         | p3      | Hyderabad(HYD) | 02/05/1992 | F      |  45000 |
+|     5 | Priya    | Thakur   | Developer  | p2      | Bangalore      | 23/02/1992 | F      | 100000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee where empfname LIKE "a%" or "e%" or "i%" or "o%" or "u%";
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address    | dob        | gender | salary |
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+|     2 | Ananya   | Mehra    | Admin      | p2      | Delhi(DEL) | 02/05/1968 | F      |  75000 |
++-------+----------+----------+------------+---------+------------+------------+--------+--------+
+1 row in set, 4 warnings (0.00 sec)
+
+mysql> select * from employee where empfname LIKE "_a%" or "_e%" or "_i%" or "_o%" or "_u%" and gender="M";
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     1 | Sanjay   | Mehra    | HR         | p1      | Hyderabad(HYD) | 01/12/1976 | M      |  50000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+1 row in set, 4 warnings (0.00 sec)
+
+mysql> select department from employee;
++------------+
+| department |
++------------+
+| HR         |
+| Admin      |
+| Account    |
+| HR         |
+| Developer  |
++------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where gender = "F" and salary < 75000;
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+| empid | empfname | emplname | department | project | address        | dob        | gender | salary |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+|     4 | Sonia    | Kulkarni | HR         | p3      | Hyderabad(HYD) | 02/05/1992 | F      |  45000 |
++-------+----------+----------+------------+---------+----------------+------------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select count (*) from employee where salary between 50000 and 100000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) from employee where salary between 50000 and 100000' at line 1
+mysql> select count (*) from employee where salary between 50000 and 100000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) from employee where salary between 50000 and 100000' at line 1
+mysql> select count(*) from employee where salary between 50000 and 100000;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.05 sec)
+
+mysql> select count(project) from employee;
++----------------+
+| count(project) |
++----------------+
+|              5 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select count(department) from employee;
++-------------------+
+| count(department) |
++-------------------+
+|                 5 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(department) from employee where department= "account";
++-------------------+
+| count(department) |
++-------------------+
+|                 1 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(department) from employee where department= "admin";
++-------------------+
+| count(department) |
++-------------------+
+|                 1 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(department) from employee where department= "HR";
++-------------------+
+| count(department) |
++-------------------+
+|                 2 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(department) from employee where department= "developer";
++-------------------+
+| count(department) |
++-------------------+
+|                 1 |
++-------------------+
+1 row in set (0.00 sec)
+
+
+
+Q2.
+1. What is the difference between a Unique Key and Primary Key?
+Ans:-
+1. A primary key can constitute one or more fields of a table to identify records in a table uniquely. On the other hand, 
+   a unique key prevents two rows from having duplicate entries in a column.
+2. A table cannot have more than one primary key in a relational database, while there can be multiple unique keys per table.
+3. A primary key column cannot contain NULL values, whereas a unique key can have NULL values, but only one NULL is allowed in a table.
+4. A primary key should be unique, but a unique key cannot necessarily be the primary key.
+5. The primary key by default is a clustered index where data is physically organized in the sequential index.
+   In contrast, the unique key is a unique non-clustered index.
+6. The primary key implements entity integrity, whereas the unique key enforces unique data.
+
+
+2.SQL is a case-sensitive language. (True or False)
+Ans:- False
+Foote
